@@ -1,0 +1,22 @@
+resources:
+  requests:
+    cpu: "100m"
+    memory: "500Mi"
+  limits:
+    cpu: "100m"
+    memory: "500Mi"
+
+ingress:
+  enabled: true
+  annotations: 
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: foo-bar
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local

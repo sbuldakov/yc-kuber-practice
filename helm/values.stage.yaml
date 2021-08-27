@@ -1,0 +1,8 @@
+ingress:
+    annotations: {}
+    fqdn: api.dev.kis.im
+public_env_variables:
+  LISTEN: "8080"
+image:
+  repository: cr.yandex/crp59eq0m5ebjdcmajbp
+  image: helm-secrets

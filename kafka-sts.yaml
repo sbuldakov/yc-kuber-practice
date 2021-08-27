@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka-sts
+spec:
+  serviceName: kafka-sts
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: bitnami/kafka
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 50m
+            memory: 100Mi
+        ports:
+        - name: http
+          containerPort: 8080
+        volumeMounts:
+        - name: kafka-pvc
+          mountPath: /var/data
+        env:
+          - name: ALLOW_PLAINTEXT_LISTENER
+            value: "yes"
+  volumeClaimTemplates:
+  - metadata:
+      name: kafka-pvc
+    spec:
+      storageClassName: yc-network-hdd
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi

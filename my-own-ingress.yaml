@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-own-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  rules:
+  - host: ingress.buldakov.ru
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx-svc
+          servicePort: 80
+  # Указываем настройки для tls — для какого хоста нужен tls и куда сохранить полученный сертификат
+  tls:
+  - hosts:
+    - ingress.buldakov.ru
+    secretName: ingress-buldakov-ru-cert
